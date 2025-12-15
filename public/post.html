@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post - Micro Social</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <h2>📱 Micro Social</h2>
+      <div class="nav-links">
+        <a href="home.html" class="nav-link">🏠 Home</a>
+        <a href="explore.html" class="nav-link">🔍 Explore</a>
+        <a href="profile.html" class="nav-link">👤 Profile</a>
+        <button onclick="logout()" class="logout-btn">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div id="loading" class="loading">Loading post...</div>
+    <div id="post"></div>
+    
+    <div class="card">
+      <h3>Add a Comment</h3>
+      <textarea 
+        id="commentText" 
+        placeholder="Write a comment..."
+        rows="3"
+      ></textarea>
+      <button onclick="addComment()" id="comment-btn">Comment</button>
+    </div>
+  </div>
+  
+  <script src="app.js"></script>
+</body>
+</html>

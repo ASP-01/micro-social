@@ -1,0 +1,22 @@
+[
+  {
+    "id": "1765699057850",
+    "email": "ssr@gmail.com",
+    "username": "SSR",
+    "password": "$2b$10$t10n3MtJ6OKpvYAUU.Mkpe8P67O2RPJfSCsf6sEhq.DBJ1OqQpAN.",
+    "bio": "Hey there! I'm using Micro Social 👋",
+    "followers": [],
+    "following": [],
+    "createdAt": "2025-12-14T07:57:37.850Z"
+  },
+  {
+    "id": "1765747175846",
+    "email": "mahesh@gmail.com",
+    "username": "JaiBabu",
+    "password": "$2b$10$OnlyZKjyAw7M43eXSSGC2OaGG/D/VG7FOUqcNXWw1skxeScLOOuJS",
+    "bio": "Hey there! I'm using Micro Social 👋",
+    "followers": [],
+    "following": [],
+    "createdAt": "2025-12-14T21:19:35.846Z"
+  }
+]

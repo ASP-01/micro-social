@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore - Social Media App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="navbar">
+      <h1>🌍 Explore</h1>
+      <div class="nav-links">
+        <a href="home.html">🏠 Home</a>
+        <a href="explore.html" class="active">🔍 Explore</a>
+        <a href="profile.html">👤 Profile</a>
+        <button onclick="logout()" class="logout-btn">🚪 Logout</button>
+      </div>
+    </div>
+
+    <div id="loading" style="text-align: center; padding: 40px;">
+      <p>Loading...</p>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="explore-tabs">
+      <button class="tab-btn" onclick="switchTab('users')">👥 People</button>
+      <button class="tab-btn active" onclick="switchTab('media')">🎨 Media Gallery</button>
+    </div>
+
+    <!-- Users Tab -->
+    <div id="users-tab" class="tab-content" style="display: none;">
+      <div class="search-box">
+        <input type="text" id="user-search" placeholder="🔍 Search for people..." oninput="searchUsers()">
+      </div>
+
+      <div id="search-results"></div>
+      <div id="user-list"></div>
+    </div>
+
+    <!-- Media Gallery Tab -->
+    <div id="media-tab" class="tab-content">
+      <div class="media-header">
+        <h2>📸 Discover Amazing Content</h2>
+        <p style="color: #888; margin-top: 5px;">Beautiful photos and videos from Pexels</p>
+        <button onclick="loadPexelsMedia()" class="refresh-btn">🔄 Refresh</button>
+      </div>
+      
+      <div id="explore-grid" class="explore-grid">
+        <!-- Media will be loaded here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Media Modal -->
+  <div id="media-modal" class="media-modal">
+    <div id="modal-content" class="modal-content">
+      <!-- Media content will be loaded here -->
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    // Tab switching functionality
+    function switchTab(tabName) {
+      // Hide all tabs
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.style.display = 'none';
+      });
+      
+      // Remove active class from all buttons
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      // Show selected tab
+      if (tabName === 'users') {
+        document.getElementById('users-tab').style.display = 'block';
+        document.querySelectorAll('.tab-btn')[0].classList.add('active');
+        loadUsers();
+      } else {
+        document.getElementById('media-tab').style.display = 'block';
+        document.querySelectorAll('.tab-btn')[1].classList.add('active');
+        loadPexelsMedia();
+      }
+    }
+
+    // Load media tab by default on page load
+    window.addEventListener('DOMContentLoaded', function() {
+      switchTab('media');
+    });
+  </script>
+</body>
+</html>

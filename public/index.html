@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Micro Social</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>🔐 Login</h1>
+      
+      <div id="error-message" class="error-message"></div>
+      
+      <form onsubmit="event.preventDefault(); login();">
+        <input 
+          type="email" 
+          id="email" 
+          placeholder="Email" 
+          required
+          autocomplete="email"
+        >
+        <input 
+          type="password" 
+          id="password" 
+          placeholder="Password" 
+          required
+          autocomplete="current-password"
+        >
+        <button type="submit" id="login-btn">Login</button>
+      </form>
+      
+      <p class="link-text">
+        Not registered? <a href="signup.html">Sign up</a>
+      </p>
+    </div>
+  </div>
+  
+  <script src="app.js"></script>
+</body>
+</html>

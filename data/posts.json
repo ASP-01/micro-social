@@ -1,0 +1,48 @@
+[
+  {
+    "_id": "1765788881196",
+    "text": "@JaiBabu shared: It's been a pleasure for directing this movie and working with mahesh . Here's the most awaited first reveal of my next with mahesh titled VARANASI. \"RUDHRA\" is here @JaiBabu shared: It's been a pleasure for directing this movie and working with mahesh . Here's the most awaited first reveal of my next with mahesh titled VARANASI. \"RUDHRA\" is here @JaiBabu shared: It's been a pleasure for directing this movie and working with mahesh . Here's the most awaited first reveal of my next with mahesh titled VARANASI. \"RUDHRA\" is here @JaiBabu shared: It's been a pleasure for directing this movie and working with mahesh . Here's the most awaited first reveal of my next with mahesh titled VARANASI. \"RUDHRA\" is here @JaiBabu shared: It's been a pleasure for directing this movie and working with mahesh . Here's the most awaited first reveal of my next with mahesh titled VARANASI. \"RUDHRA\" is here @JaiBabu shared: It's been a pleasure for directing this movie and working with mahesh . Here's the most awaited first reveal of my next with mahesh titled VARANASI. \"RUDHRA\" is here",
+    "user": "ssr@gmail.com",
+    "username": "SSR",
+    "mediaUrl": null,
+    "mediaType": null,
+    "likes": [],
+    "date": "2025-12-15T08:54:41.196Z",
+    "comments": []
+  },
+  {
+    "_id": "1765750148247",
+    "text": "🔄 @JaiBabu shared: It's been a pleasure for directing this movie and working with mahesh . Here's the most awaited first reveal of my next with mahesh titled VARANASI. \"RUDHRA\" is here",
+    "user": "mahesh@gmail.com",
+    "username": "JaiBabu",
+    "mediaUrl": "/uploads/1765747148126-383005323.jpg",
+    "mediaType": "image",
+    "likes": [],
+    "date": "2025-12-14T22:09:08.247Z",
+    "comments": [],
+    "sharedFrom": {
+      "username": "SSR",
+      "postId": "1765747148132"
+    }
+  },
+  {
+    "_id": "1765747148132",
+    "text": "It's been a pleasure for directing this movie and working with mahesh . Here's the most awaited first reveal of my next with mahesh titled VARANASI. \"RUDHRA\" is here",
+    "user": "ssr@gmail.com",
+    "username": "SSR",
+    "mediaUrl": "/uploads/1765747148126-383005323.jpg",
+    "mediaType": "image",
+    "likes": [
+      "mahesh@gmail.com"
+    ],
+    "date": "2025-12-14T21:19:08.132Z",
+    "comments": [
+      {
+        "text": "Something big is coming for you see you soon :)",
+        "user": "mahesh@gmail.com",
+        "username": "JaiBabu",
+        "date": "2025-12-14T21:20:54.296Z"
+      }
+    ]
+  }
+]
