@@ -9,8 +9,8 @@ const router = express.Router();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const usersFile = path.join(__dirname, '..', 'data', 'users.json');
+const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-key-for-development-12345';
 
-// Helper functions
 // Helper functions
 function readUsers() {
   try {
@@ -106,7 +106,7 @@ router.post("/login", async (req, res) => {
 
     const token = jwt.sign(
       { email: user.email, username: user.username }, 
-      process.env.JWT_SECRET,
+      JWT_SECRET,
       { expiresIn: "7d" }
     );
 
