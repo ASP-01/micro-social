@@ -65,7 +65,29 @@ function auth(req, res, next) {
   }
 }
 
-// Search users
+// ⚠️ IMPORTANT: Specific routes MUST come BEFORE dynamic routes!
+
+// Get current user - MUST BE FIRST (specific route)
+router.get("/me", auth, async (req, res) => {
+  try {
+    const users = readUsers();
+    const user = users.find(u => u.email === req.user.email);
+    
+    if (!user) {
+      console.log("❌ User not found for email:", req.user.email);
+      return res.status(404).json({ message: "User not found" });
+    }
+    
+    const { password, ...userWithoutPassword } = user;
+    console.log("✅ Found current user:", userWithoutPassword.username);
+    res.json(userWithoutPassword);
+  } catch (error) {
+    console.error("Get current user error:", error);
+    res.status(500).json({ message: "Error fetching user info", error: error.message });
+  }
+});
+
+// Search users - specific route
 router.get("/search/:query", auth, async (req, res) => {
   try {
     const { query } = req.params;
@@ -107,23 +129,7 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-// Get user profile
-router.get("/profile/:username", auth, async (req, res) => {
-  try {
-    const users = readUsers();
-    const user = users.find(u => u.username === req.params.username);
-    
-    if (!user) return res.status(404).json({ message: "User not found" });
-    
-    const { password, ...userWithoutPassword } = user;
-    res.json(userWithoutPassword);
-  } catch (error) {
-    console.error("Get profile error:", error);
-    res.status(500).json({ message: "Error fetching profile", error: error.message });
-  }
-});
-
-// Follow user
+// Follow user - specific action route
 router.post("/follow/:username", auth, async (req, res) => {
   try {
     const users = readUsers();
@@ -157,7 +163,7 @@ router.post("/follow/:username", auth, async (req, res) => {
   }
 });
 
-// Unfollow user
+// Unfollow user - specific action route
 router.post("/unfollow/:username", auth, async (req, res) => {
   try {
     const users = readUsers();
@@ -183,19 +189,19 @@ router.post("/unfollow/:username", auth, async (req, res) => {
   }
 });
 
-// Get current user
-router.get("/me", auth, async (req, res) => {
+// Get user profile - MUST BE LAST (dynamic route catches everything)
+router.get("/profile/:username", auth, async (req, res) => {
   try {
     const users = readUsers();
-    const user = users.find(u => u.email === req.user.email);
+    const user = users.find(u => u.username === req.params.username);
     
     if (!user) return res.status(404).json({ message: "User not found" });
     
     const { password, ...userWithoutPassword } = user;
     res.json(userWithoutPassword);
   } catch (error) {
-    console.error("Get current user error:", error);
-    res.status(500).json({ message: "Error fetching user info", error: error.message });
+    console.error("Get profile error:", error);
+    res.status(500).json({ message: "Error fetching profile", error: error.message });
   }
 });
 

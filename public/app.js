@@ -1,6 +1,10 @@
 const API = window.location.hostname === 'localhost' 
   ? "http://localhost:3000"
   : window.location.origin;
+
+  function getToken() {
+    return localStorage.getItem("token");
+  }
 let token = localStorage.getItem("token");
 let currentUser = null;
 let selectedMedia = null;
@@ -45,8 +49,18 @@ function escapeHtml(text) {
 }
 
 function checkAuth() {
-  if (!token && !window.location.pathname.includes("index.html") && !window.location.pathname.includes("signup.html")) {
-    location.href = "index.html";
+  const publicPages = ['index.html', 'signup.html', '/index.html', '/signup.html', '/', '/index', '/signup'];
+  const currentPath = window.location.pathname;
+  
+  // Check if we're on a public page
+  const isPublicPage = publicPages.some(page => 
+    currentPath === page || currentPath.endsWith(page)
+  );
+  
+  // If no token and NOT on a public page, redirect to login
+  if (!token && !isPublicPage) {
+    console.log('No token found, redirecting to login');
+    location.href = "/index.html";
   }
 }
 
@@ -1133,6 +1147,10 @@ async function unfollowUser(username) {
 }
 
 async function loadProfile() {
+   console.log('=== loadProfile called ===');
+  console.log('Token:', token);
+  console.log('localStorage token:', localStorage.getItem('token'));
+  console.log('API:', API);
   hideLoading();
   const profileDiv = document.getElementById("profile-content");
   if (!profileDiv) return;
@@ -1142,9 +1160,9 @@ async function loadProfile() {
 
   try {
     let user;
-    await loadCurrentUser();
 
     if (username && username !== "undefined" && username !== "null") {
+      // Loading someone else's profile
       const response = await fetch(`${API}/users/profile/${encodeURIComponent(username)}`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
@@ -1155,12 +1173,37 @@ async function loadProfile() {
 
       user = await response.json();
     } else {
-      if (!currentUser) await loadCurrentUser();
-      user = currentUser;
+      // Loading MY profile - use /users/me endpoint
+      const response = await fetch(`${API}/users/me`, {
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          // Token invalid - redirect to login
+          localStorage.clear();
+          window.location.href = '/index.html';
+          return;
+        }
+        throw new Error("Failed to load profile");
+      }
+
+      user = await response.json();
+      currentUser = user; // Update currentUser
     }
 
     if (!user) {
       throw new Error("User not found");
+    }
+
+    // Load currentUser if not already loaded
+    if (!currentUser) {
+      const meResponse = await fetch(`${API}/users/me`, {
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+      if (meResponse.ok) {
+        currentUser = await meResponse.json();
+      }
     }
 
     const isFollowing = currentUser && currentUser.following && currentUser.following.includes(user.email);
@@ -1171,7 +1214,7 @@ async function loadProfile() {
         <div class="profile-avatar">${user.username.charAt(0).toUpperCase()}</div>
         <h2>@${escapeHtml(user.username)}</h2>
         <p>${escapeHtml(user.email)}</p>
-        <p style="color: #888; font-style: italic;">${escapeHtml(user.bio)}</p>
+        <p style="color: #888; font-style: italic;">${escapeHtml(user.bio || 'No bio yet')}</p>
         
         ${!isOwnProfile ? `
           <button class="${isFollowing ? 'unfollow-btn' : 'follow-btn'}" onclick="event.preventDefault(); ${isFollowing ? 'unfollowUser' : 'followUser'}('${escapeHtml(user.username)}')" style="width: 200px; margin: 15px auto 0;">
@@ -1198,11 +1241,10 @@ async function loadProfile() {
   } catch (error) {
     console.error("Load profile error:", error);
     profileDiv.innerHTML = `
-      <div class="card">
-        <p style="color: #c33; text-align: center;">Failed to load profile</p>
-        <p style="text-align: center; margin-top: 10px;">
-          <a href="explore.html" style="color: #667eea;">← Back to Explore</a>
-        </p>
+      <div style="text-align: center; padding: 40px; color: #ff6b6b;">
+        <h3>Failed to load profile</h3>
+        <p>${error.message}</p>
+        <a href="/explore.html" style="color: #c586c0;">← Back to Explore</a>
       </div>
     `;
   }
